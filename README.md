@@ -1,2 +1,2 @@
-# Unit-1
+# SMU Data Science
 Doing Data Science
