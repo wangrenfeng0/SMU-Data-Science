@@ -94,3 +94,83 @@ summary(xbars1)
 
 sd(xbars)
 sd(xbars1)
+
+quiz= read.csv(file.choose(), header = TRUE)
+quiz
+boxplot(quiz$Score~quiz$Treatment, data=quiz,main='Creativity', xlab='Treatment', ylab='Score')
+abline(h=mean(quiz$Score))
+points(mean(quiz$Score))
+mean(quiz$Score)
+
+install.packages("ggplot2") # Install it again
+library(ggplot2) # Load the librarie (you have to do this one on each new session)
+mtcars
+install.packages("C50")
+install.packages("gmodels")
+install.packages("party")
+install.packages("car")
+install.packages("ggplot2")
+library(C50)
+library(gmodels)
+library(party)
+library(car)
+library(ggplot2)
+mpg
+
+install.packages("magrittr") # package installations are only needed the first time you use it
+install.packages("dplyr")    # alternative installation of the %>%
+library(magrittr) # needs to be run every time you start R and want to use %>%
+library(dplyr)    # alternatively, this also loads %>%
+data()
+mpg %>% ggplot(aes(x = displ, y = hwy, color = drv)) + geom_point()
+
+ggplot(mpg, aes(x=displ,y=hwy, color=drv))+geom_point() #Both two scatter plots are the same
+ggplot(data=mpg, mapping=aes(x=displ,y=hwy, color=drv))+geom_point()
+
+
+ggplot(mpg, aes(x=hwy, y=cty))+geom_point()
+
+ggplot(mpg, aes(x=hwy, y=cty))+geom_smooth()
+
+ggplot(mpg, aes(x=hwy, y=cty, linetype=drv))+geom_smooth()
+ggplot(mpg, aes(x=hwy, y=cty, linetype=drv, color=drv))+geom_smooth()+geom_point()
+ggplot(mpg)+geom_smooth(aes(x=hwy, y=cty, linetype=drv,color=drv))
++geom_point(aes(x=hwy, y=cty, color=class))
+
+ggplot(mpg)+geom_smooth(aes(x=hwy, y=cty, linetype=class,color=class))+geom_point(aes(x=hwy, y=cty, color=class))+
+facet_wrap(~class)
+
+
+ggplot(mpg)+geom_smooth(aes(x=hwy, y=cty, linetype=class,color=class))+geom_point(aes(x=hwy, y=cty, color=class))+
+facet_grid(drv~class)
+
+
+mpg %>% ggplot(aes(x = cty, y = hwy, color = drv)) + geom_point() + facet_grid(cyl~year)
+
+mpg %>% ggplot(aes(x = class, y = cty)) + geom_boxplot() + ggtitle("Boxplot of City MPG v. Class")
+
+
+mpg %>% ggplot(aes(x = class)) + geom_bar(stat = "count") #stat = "count" is default
+mpg %>% ggplot(aes(x = class, y = cty)) + geom_bar()
+#stat = identity adds the values of the y value per class (x level)
+mpg %>% ggplot(aes(x = class, y = cty)) + geom_bar(stat = "identity") #sum of all cty mile per gallon by class
+
+mpg %>% ggplot(aes(x = class, fill=drv)) + geom_bar(position='dodge')
+#position can be {dodge, stack, fill}
+
+ggplot(mpg)+geom_smooth(aes(x=hwy, y=cty, linetype=class,color=class))+geom_point(aes(x=hwy, y=cty, color=class), position='jitter')+
+facet_grid(drv~class)
+
+
+ggplot(mpg, aes(x=class, fill=class))+geom_bar()+coord_flip()
+ggplot(mpg, aes(x=class, fill=class))+geom_bar()+coord_polar()
+
+install.packages('maps')
+library(maps)
+usa=map_data('usa')
+ggplot(usa)+geom_polygon(aes(x=long,y=lat,group=group),fill='red', color='black')+
+  coord_quickmap()
+
+Dallas=tibble(long=c(-96.797), lat=c(32.7767), names=c('Dallas'))
+p+geom_point(data=Dallas, aes(x=long, y=lat), shape=20,color='black',fill='blue', size=5)+
+  geom_text(data=Dallas, aes(x=long, y=lat,label=names),hjust=0,nudge_x=1,color='white')
