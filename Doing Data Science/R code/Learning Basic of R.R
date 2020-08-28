@@ -5,6 +5,7 @@ plot(x)
 
 age=c(21,22,24,19,20,23)
 age
+summary(age)
 age[2]
 yrs_math_ed = c(4,5,2,5,3,5)
 yrs_math_ed
@@ -174,3 +175,13 @@ ggplot(usa)+geom_polygon(aes(x=long,y=lat,group=group),fill='red', color='black'
 Dallas=tibble(long=c(-96.797), lat=c(32.7767), names=c('Dallas'))
 p+geom_point(data=Dallas, aes(x=long, y=lat), shape=20,color='black',fill='blue', size=5)+
   geom_text(data=Dallas, aes(x=long, y=lat,label=names),hjust=0,nudge_x=1,color='white')
+library(maps)
+?map_data
+install.packages('ggthemes')
+library(ggthemes) 
+
+ggplot(mpg, aes(x=class, fill=class))+geom_bar()+theme_economist()
+ggplot(mpg, aes(x=class))+geom_bar()+theme_wsj()
+
+install.packages('plotly')
+library(plotly)
