@@ -25,7 +25,7 @@ library(plotly)
 ggplotly(p)
 
 mtcars
-library(ggplot2)
+library(ggplot2) 
 theme_set(theme_bw())
 mtcars$`car name` <- rownames(mtcars)
 mtcars$mpg_z <- round((mtcars$mpg - mean(mtcars$mpg))/sd(mtcars$mpg), 2)  # compute normalized mpg

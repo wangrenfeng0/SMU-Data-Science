@@ -65,7 +65,7 @@ p=plot_ly(player, x=~weight, y=~height_inch, z=~birthday, color=~position) %>%
                        zaxis=list(title='Birthday')))
 
 
-
+p
 
 
 
