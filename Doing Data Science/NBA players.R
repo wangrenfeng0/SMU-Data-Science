@@ -2,6 +2,7 @@ library(ggthemes)
 library(plotly)
 library(magrittr)
 library(ggplot2)
+library(tidyr)
 
 player = read.csv(file.choose(), header= TRUE)
 player
@@ -13,18 +14,19 @@ ggplot(player[player$position=='C' | player$position=='F',],aes(x=position, y=we
 
 summary(player)
 
-player$height_num=strsplit(player$height,'-')
+#player$height_num=strsplit(player$height,'-')
+player=separate(player,col=height,into=c('feet','inch'),sep='-', remove=TRUE)
 
-player$height_num[[6]][[2]]
-class(as.numeric(player$height_num[[2]][[2]]))
-
-
-
-for (i in 1:nrow(player)) 
-{
-    player$height_inch[[i]]=as.numeric(player$height_num[[i]][[1]])*12+as.numeric(player$height_num[[i]][[2]])
-}
+class(player$feet)
+player=mutate(player,height_inch=as.numeric(player$feet)*12+as.numeric(player$inch))
 player
+
+
+#for (i in 1:nrow(player)) 
+#{
+#    player$height_inch[[i]]=as.numeric(player$height_num[[i]][[1]])*12+as.numeric(player$height_num[[i]][[2]])
+#}
+#player
 
 p=ggplot(player[player$position=='C' | player$position=='F',],aes(x=position, y=height_inch))+
   geom_boxplot()+ggtitle('Distribution of the height of centers (C) and the distribution of the height of forwards (F).')
@@ -66,7 +68,8 @@ p=plot_ly(player, x=~weight, y=~height_inch, z=~birthday, color=~position) %>%
 
 
 p
-
+install.packages("Rcpp")
+install.packages('gganimate')
 
 
 
