@@ -128,3 +128,41 @@ fifa_player %>% select(Name,player_reputationfactor, Position, BallControl, Fini
 
 fifa_player %>% select(player_reputationfactor, BallControl, Finishing) %>% 
   ggpairs(aes(color=player_reputationfactor))
+
+
+xBarVec=c()
+xbarGenerator = function(sampleSize, number_of_samples)
+{
+  for (i in 1:number_of_samples)
+  {
+    theSample = sample(fifa_LM$Agility, sampleSize)
+    xbar = mean(theSample)
+    xBarVec = c(xBarVec, xbar)
+  }
+  return(xBarVec)
+}
+
+xbars=xbarGenerator(50,10000)
+
+
+hist(xbars, col='red', main='Distribution of the sample mean for LM: n = 50')
+
+
+
+
+xBarVec=c()
+xbarGenerator = function(sampleSize, number_of_samples)
+{
+  for (i in 1:number_of_samples)
+  {
+    theSample = sample(fifa_LF$Agility, sampleSize)
+    xbar = mean(theSample)
+    xBarVec = c(xBarVec, xbar)
+  }
+  return(xBarVec)
+}
+
+xbars=xbarGenerator(5,10000)
+
+
+hist(xbars, col='red', main='Distribution of the sample mean for LF: n = 5')
