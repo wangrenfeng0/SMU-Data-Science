@@ -91,7 +91,7 @@ qt(0.975,1108)  #critical t value
 nrow(fifa_LM)
 sd(fifa_LM$Agility)
 sd(fifa_LF$Agility)
-t.test(fifa_ttest %>% filter(Position=='LM') %>% select(Agility), fifa_ttest %>% filter(Position=='LF') %>% select(Agility), alternative='two.sided', var.equal=TRUE)
+t.test(fifa_ttest %>% filter(Position=='LM') %>% select(Agility), fifa_ttest %>% filter(Position=='LF') %>% select(Agility), alternative='two.sided')
 
 fifa_ttest %>% ggplot(aes(x=Agility, fill=Position))+geom_histogram()+facet_wrap(~Position)
 
