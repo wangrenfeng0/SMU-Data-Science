@@ -1,4 +1,4 @@
-mpg
+install.packages('mtcars')
 x = NA
 is.na(x)
 #Dataframe for the Example
@@ -24,6 +24,8 @@ library(nycfligthts13)
 
 # chooses rows with year < 2000
 mpg %>% filter(year < 2000)
+
+
 
 #chooses the columns class, city, hwy
 mpg %>% select(class, cty, hwy)
@@ -166,3 +168,17 @@ xbars=xbarGenerator(5,10000)
 
 
 hist(xbars, col='red', main='Distribution of the sample mean for LF: n = 5')
+
+
+
+sample = c(1.7, 1.6, 1.5, 2.0, 2.3, 1.6, 1.6, 1.8, 1.5, 1.7, 1.2, 1.4, 1.6, 1.6, 1.6)
+t.test(x=sample, mu = 1.8, conf.int = "TRUE", alternative = "two.sided")
+
+
+install.packages('car')
+install.packages('mgcv')
+install.packages('tidymodels')
+install.packages('maps')
+install.packages('XML')
+install.packages('jsonlite')
+       
