@@ -35,4 +35,20 @@ pvalue
 
 Fired = c(34, 37, 37, 38, 41, 42, 43, 44, 44, 45, 45, 45, 46, 48, 49, 53, 53, 54, 54, 55, 56)
 Not_fired = c(27, 33, 36, 37, 38, 38, 39, 42, 42, 43, 43, 44, 44, 44, 45, 45, 45, 45, 46, 46, 47, 47, 48, 48, 49, 49, 51, 51, 52, 54)
-t.test(x = Fired, y = Not_fired, conf.int = .95, var.equal = TRUE, alternative = "two.sided")
+#t.test(x = Fired, y = Not_fired, conf.int = .95, var.equal = TRUE, alternative = "two.sided")
+label1=rep('Fired',21)
+label2=rep('Not_fired', 30)
+label=as.factor(c(label1, label2))
+people=data.frame(age=c(Fired, Not_fired), status=label)
+people
+graphics.off()
+par(mar = rep(2, 4))
+par(mfrow=c(2,2))
+hist(Fired,xlab='Age', main='Fired')
+
+hist(Not_fired, xlab='Age', main='Not Fired')
+qqnorm(Fired, main='Fired')
+qqline(Fired)
+
+qqnorm(Not_fired, main='Not_fired')
+qqline(Not_fired)
