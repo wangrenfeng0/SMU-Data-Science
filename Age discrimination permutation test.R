@@ -52,3 +52,4 @@ qqline(Fired)
 
 qqnorm(Not_fired, main='Not_fired')
 qqline(Not_fired)
+people %>% ggplot(aes(x=status, y=age))+geom_boxplot()

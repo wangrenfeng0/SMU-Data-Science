@@ -5,7 +5,8 @@ library(stringi)
 library(rvest) #html_table, html_node
 library(ggplot2)
 library(RCurl) #getURL
-
+library(plotly)
+library(gridExtra)
 #Basics of Scraping XML
 
 # Method 1: XML
@@ -78,9 +79,9 @@ totals
 rest_merg=merge(rest_infor,totals)
 rest_merg
 rest_merg %>% group_by(city_councilfactor) %>% arrange(city_councilfactor) %>% ggplot(aes(x=reorder(city_councilfactor, n), y=n)) + geom_bar(stat='identity')+
-  geom_text(aes(city_councilfactor, vjust=1,label=n, fill=NULL), data=totals)+ xlab('Count')+ ylab('City Council')
+  geom_text(aes(city_councilfactor, vjust=1,label=n, fill=NULL), data=totals)+ xlab('City Council')+ ylab('Count')
 
-
+------------------------------------------------------
 # API Codes
 
 #Unit 4 API R Code
@@ -100,16 +101,59 @@ call1
 #get_prices <- fromJSON(call)
 #get_prices_text <- content(get_prices, "text")
 #get_prices_text
-apple_json <- jsonlite::fromJSON(call1, flatten=TRUE)
-apple_json
-apple_df <- as.data.frame(apple_json)
-apple_df
-str(apple_df)
-apple_df$stock_prices.date = as.Date(apple_df$stock_prices.date)
-str(apple_df)
-par(mfrow = c(2,1))
-apple_df %>% ggplot(aes(x = stock_prices.date, y = stock_prices.close))+ geom_line() + ggtitle("Adjusted Close")
-apple_df %>% ggplot(aes(x = stock_prices.date, y = stock_prices.volume))+ geom_col() + ggtitle("Adjusted Volume")
+stock_json <- jsonlite::fromJSON(call1, flatten=TRUE)
+stock_json
+stock_df <- as.data.frame(stock_json)
+stock_df
+
+stock_df$stock_prices.date = as.Date(stock_df$stock_prices.date)
+
+par(mar = rep(2, 4)) #Set plot margin
+par(mfrow = c(2,1)) # does not work in ggplot
+
+p=stock_df %>% ggplot(aes(x = stock_prices.date, y = stock_prices.close))+ geom_line() + ggtitle("Adjusted Close")
+ggplotly(p)
+
+q=stock_df %>% ggplot(aes(x = stock_prices.date, y = stock_prices.volume))+ geom_col() + ggtitle("Adjusted Volume")
+ggplotly(q)
+
+grid.arrange(p, q, nrow=2)
+
+
+--------------------------------------------
+
+
+
+
+username = "OjcwYTBlMTU1ODk1YjJiMTI1ZTE1OWFhZTRjMDhkYWM5"
+password = "Ojc0OWNjMmQ3Yzk4MTRhZmNmZGYwY2VmNjVkNTBkNjgy"
+
+base <- "https://api-v2.intrinio.com/securities/"
+endpoint <- "prices"
+stock <- "GE"
+call1 <- paste(base,stock,"/", endpoint,"?", 'api_key=', username,sep='')
+call1
+#get_prices <- fromJSON(call)
+#get_prices_text <- content(get_prices, "text")
+#get_prices_text
+stock_json <- jsonlite::fromJSON(call1, flatten=TRUE)
+stock_json
+stock_df <- as.data.frame(stock_json)
+stock_df
+
+stock_df$stock_prices.date = as.Date(stock_df$stock_prices.date)
+
+par(mar = rep(2, 4)) #Set plot margin
+par(mfrow = c(2,1)) # does not work in ggplot
+
+p=stock_df %>% ggplot(aes(x = stock_prices.date, y = stock_prices.close))+ geom_line() + ggtitle("Adjusted Close")
+ggplotly(p)
+
+q=stock_df %>% ggplot(aes(x = stock_prices.date, y = stock_prices.volume))+ geom_col() + ggtitle("Adjusted Volume")
+ggplotly(q)
+
+grid.arrange(p, q, nrow=2)
+
 
 
 client <- IntrinioSDK::ApiClient$new()
@@ -121,7 +165,7 @@ client$configuration$apiKey <- "OjcwYTBlMTU1ODk1YjJiMTI1ZTE1OWFhZTRjMDhkYWM5"
 SecurityApi <- IntrinioSDK::SecurityApi$new(client)
 
 # Required params
-identifier <- "AAPL" # Character | A Security identifier (Ticker, FIGI, ISIN, CUSIP, Intrinio ID)
+identifier <- "GE" # Character | A Security identifier (Ticker, FIGI, ISIN, CUSIP, Intrinio ID)
 
 # Optional params
 opts <- list(
@@ -134,4 +178,13 @@ opts <- list(
 
 response <- SecurityApi$get_security_stock_prices(identifier, opts)
 
-response
+print(response)
+print(response$content)
+
+
+uscis='https://raw.githubusercontent.com/vicdus/uscis-case-statistics/master/package.json'
+uscis_json <- jsonlite::fromJSON(uscis, flatten=TRUE)
+uscis_json
+
+uscis_df <- as.data.frame(uscis_json)
+uscis_df
